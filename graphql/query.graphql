@@ -1,0 +1,28 @@
+extend type Query {
+
+
+  users: [User] @paginate
+  # @all
+  user(id: ID @eq): User @find
+
+  posts(status: String @where(operator: "=", key:"publication_status")): [Post] @paginate(defaultCount:2),
+  post(id: ID @eq): Post @find
+}
+
+
+type Post {
+  id: ID!
+  title: String!
+  dec: String!
+  user: User @belongsTo
+  created_at: String!
+  updated_at: String
+  publication_status: PostPublicationStatus
+}
+
+
+
+enum PostPublicationStatus {
+  PUBLISH @enum(value: "publish")
+  UNPUBLISH @enum(value: "unpublish")
+}
